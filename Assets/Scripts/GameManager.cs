@@ -30,19 +30,19 @@ public class GameManager : MonoBehaviour {
 
 	}
 
-	private void spawnEnemy(Vector3 position) {
+	public void spawnEnemy(Vector3 position) {
 		GameObject testEnemy = Instantiate(enemy, position, Quaternion.identity)
 		 												as GameObject;
 		enemies.Add(testEnemy.transform);
 	}
 
-	private void spawnBullet(Vector3 position) {
+	public void spawnBullet(Vector3 position) {
 		GameObject testBullet = Instantiate(bullet, position, Quaternion.identity)
 															as GameObject;
 		bullets.Add(testBullet.transform);
 	}
 
-	private void spawnTower(Vector3 position) {
+	public void spawnTower(Vector3 position) {
 		GameObject testTower = Instantiate(tower, position, Quaternion.identity)
 														as GameObject;
 		towers.Add(testTower.transform);

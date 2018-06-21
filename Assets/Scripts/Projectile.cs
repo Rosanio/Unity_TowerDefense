@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour {
+public class Projectile : MonoBehaviour {
 
 	public float speed;
+	public int damage;
 
 	private Rigidbody2D rigidBody;
 	private Transform target = null;
@@ -23,7 +24,6 @@ public class Bullet : MonoBehaviour {
 			if(minDistance < 0 || distance < minDistance) {
 				minDistance = distance;
 				target = GameManager.instance.enemies[i];
-				Debug.Log(target);
 			}
 		}
 	}
@@ -33,7 +33,6 @@ public class Bullet : MonoBehaviour {
 		Vector3 position = transform.position;
 		//Calculate new trajectory
 		float xDiff = target.position.x - position.x;
-		Debug.Log(xDiff);
 		Vector2 newVelocity = new Vector2((target.position.x - position.x), (target.position.y - position.y));
 		newVelocity.Normalize();
 

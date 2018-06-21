@@ -4,17 +4,40 @@ using UnityEngine;
 
 public class Tower : MonoBehaviour {
 
-	void Start () {
-		
+	public float bulletSpawnWaitTime;
+
+	private float bulletSpawnStartTime = 0;
+	private float bulletSpawnCurrentTime = 0;
+	private Collider2D target;
+
+	void Start (){
+
 	}
 
-	void OnTriggerEnter2D(Collider2D other) {
-		if(other.tag == "Enemy") {
+	void Update() {
+		if(target != null && shouldSpawnBullet()) {
 			spawnBullet();
 		}
 	}
 
+	void OnTriggerEnter2D(Collider2D other) {
+		// target = other;
+		if(other.tag == "Enemy") {
+			target = other;
+		}
+	}
+
 	private void spawnBullet() {
-		Instantiate(GameManager.instance.bullet, transform.position, Quaternion.identity);
+		bulletSpawnStartTime = getTime();
+		GameManager.instance.spawnBullet(transform.position);
+	}
+
+	private bool shouldSpawnBullet() {
+		bulletSpawnCurrentTime = getTime();
+		return (bulletSpawnCurrentTime - bulletSpawnStartTime) > bulletSpawnWaitTime;
+	}
+
+	private float getTime() {
+		return Time.time * 1000;
 	}
 }

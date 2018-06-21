@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour {
 
+	public Vector2 speed;
+	public int health;
+
 	private Rigidbody2D rigidBody;
 
 	void Start () {
@@ -14,7 +17,15 @@ public class Enemy : MonoBehaviour {
 		move();
 	}
 
+	void OnTriggerEnter2D(Collider2D other) {
+		if(other.tag == "Projectile") {
+			Projectile projectile = other.gameObject.GetComponent<Projectile>();
+			health = health - projectile.damage;
+			Debug.Log(health);
+		}
+	}
+
 	private void move() {
-		rigidBody.velocity = new Vector2(0, 1);
+		rigidBody.velocity = speed;
 	}
 }
