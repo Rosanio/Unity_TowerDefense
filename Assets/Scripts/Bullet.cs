@@ -8,12 +8,10 @@ public class Bullet : MonoBehaviour {
 
 	private Rigidbody2D rigidBody;
 	private Transform target = null;
-	private Vector2 position;
 
 	// Use this for initialization
 	void Start () {
 		rigidBody = GetComponent<Rigidbody2D>();
-		position = GetComponent<Transform>().position;
 		FindTarget();
 	}
 
@@ -21,17 +19,21 @@ public class Bullet : MonoBehaviour {
 		float minDistance = -1.0f;
 		for(int i = 0; i < GameManager.instance.enemies.Count; i++) {
 			Vector2 enemyPosition = GameManager.instance.enemies[i].position;
-			float distance = Vector2.Distance(position, enemyPosition);
+			float distance = Vector2.Distance(transform.position, enemyPosition);
 			if(minDistance < 0 || distance < minDistance) {
 				minDistance = distance;
 				target = GameManager.instance.enemies[i];
+				Debug.Log(target);
 			}
 		}
 	}
 
 	// Update is called once per frame
 	void Update () {
+		Vector3 position = transform.position;
 		//Calculate new trajectory
+		float xDiff = target.position.x - position.x;
+		Debug.Log(xDiff);
 		Vector2 newVelocity = new Vector2((target.position.x - position.x), (target.position.y - position.y));
 		newVelocity.Normalize();
 

@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class Tower : MonoBehaviour {
 
-	private Transform transform;
-
 	void Start () {
-		transform = GetComponent<Transform>();
+		
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {

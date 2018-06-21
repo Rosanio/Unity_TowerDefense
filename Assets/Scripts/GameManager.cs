@@ -22,7 +22,8 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void Start() {
-		spawnEnemy(new Vector3(0.0f, 0.0f, 0.0f));
+		spawnTower(new Vector3(-2.0f, 0.0f, 0.0f));
+		spawnEnemy(new Vector3(0.0f, -15.0f, 0.0f));
 	}
 
 	void Update() {
@@ -31,17 +32,19 @@ public class GameManager : MonoBehaviour {
 
 	private void spawnEnemy(Vector3 position) {
 		GameObject testEnemy = Instantiate(enemy, position, Quaternion.identity)
-		 													as GameObject;
+		 												as GameObject;
 		enemies.Add(testEnemy.transform);
 	}
 
 	private void spawnBullet(Vector3 position) {
-		GameObject testBullet = Instantiate(bullet, position, Quaternion.identity) as GameObject;
-		enemies.Add(testBullet.transform);
+		GameObject testBullet = Instantiate(bullet, position, Quaternion.identity)
+															as GameObject;
+		bullets.Add(testBullet.transform);
 	}
 
 	private void spawnTower(Vector3 position) {
-		GameObject testTower = Instantiate(tower, position, Quaternion.identity) as GameObject;
-		enemies.Add(testTower.transform);
+		GameObject testTower = Instantiate(tower, position, Quaternion.identity)
+														as GameObject;
+		towers.Add(testTower.transform);
 	}
 }
