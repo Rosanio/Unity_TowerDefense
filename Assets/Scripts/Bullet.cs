@@ -31,7 +31,6 @@ public class Bullet : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		position = GetComponent<Transform>().position;
 		//Calculate new trajectory
 		Vector2 newVelocity = new Vector2((target.position.x - position.x), (target.position.y - position.y));
 		newVelocity.Normalize();

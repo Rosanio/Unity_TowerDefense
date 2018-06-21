@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Tower : MonoBehaviour {
 
-	private CircleCollider2D collider;
+	private Transform transform;
 
 	void Start () {
-		collider = GetComponent<CircleCollider2D>();
+		transform = GetComponent<Transform>();
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {
@@ -17,6 +17,6 @@ public class Tower : MonoBehaviour {
 	}
 
 	private void spawnBullet() {
-		Instantiate(GameManager.instance.bullet,GetComponent<Transform>().position, Quaternion.identity);
+		Instantiate(GameManager.instance.bullet, transform.position, Quaternion.identity);
 	}
 }

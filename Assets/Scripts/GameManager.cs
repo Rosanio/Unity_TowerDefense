@@ -21,10 +21,27 @@ public class GameManager : MonoBehaviour {
 		DontDestroyOnLoad(gameObject);
 	}
 
-	void Start () {
-		GameObject testTower = Instantiate(tower, new Vector3(0f, 0f, 0f), Quaternion.identity) as GameObject;
-		towers.Add(testTower.transform);
-		GameObject testEnemy = Instantiate(enemy, new Vector3(0f, 100f, 0f), Quaternion.identity) as GameObject;
+	void Start() {
+		spawnEnemy(new Vector3(0.0f, 0.0f, 0.0f));
+	}
+
+	void Update() {
+
+	}
+
+	private void spawnEnemy(Vector3 position) {
+		GameObject testEnemy = Instantiate(enemy, position, Quaternion.identity)
+		 													as GameObject;
 		enemies.Add(testEnemy.transform);
+	}
+
+	private void spawnBullet(Vector3 position) {
+		GameObject testBullet = Instantiate(bullet, position, Quaternion.identity) as GameObject;
+		enemies.Add(testBullet.transform);
+	}
+
+	private void spawnTower(Vector3 position) {
+		GameObject testTower = Instantiate(tower, position, Quaternion.identity) as GameObject;
+		enemies.Add(testTower.transform);
 	}
 }
