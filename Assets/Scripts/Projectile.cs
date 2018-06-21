@@ -39,4 +39,11 @@ public class Projectile : MonoBehaviour {
 		//Move
 		rigidBody.velocity = newVelocity * speed;
 	}
+
+	void OnTriggerEnter2D(Collider2D other) {
+		if(other.tag == "Enemy") {
+			Debug.Log("Enemy hit");
+			Destroy(gameObject, 0.1f);
+		}
+	}
 }

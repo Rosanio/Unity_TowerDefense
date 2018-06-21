@@ -15,13 +15,16 @@ public class Enemy : MonoBehaviour {
 
 	void Update() {
 		move();
+		if(health <= 0) {
+			Debug.Log("Boom!");
+			Destroy(gameObject, 0.0f);
+		}
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {
 		if(other.tag == "Projectile") {
 			Projectile projectile = other.gameObject.GetComponent<Projectile>();
 			health = health - projectile.damage;
-			Debug.Log(health);
 		}
 	}
 
