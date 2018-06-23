@@ -30,14 +30,15 @@ public class Projectile : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		Vector3 position = transform.position;
-		//Calculate new trajectory
-		float xDiff = target.position.x - position.x;
-		Vector2 newVelocity = new Vector2((target.position.x - position.x), (target.position.y - position.y));
-		newVelocity.Normalize();
+		if(target != null) {
+			Vector3 position = transform.position;
+			//Calculate new trajectory
+			Vector2 newVelocity = new Vector2((target.position.x - position.x), (target.position.y - position.y));
+			newVelocity.Normalize();
 
-		//Move
-		rigidBody.velocity = newVelocity * speed;
+			//Move
+			rigidBody.velocity = newVelocity * speed;
+		}
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {
