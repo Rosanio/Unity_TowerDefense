@@ -22,8 +22,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void Start() {
-		spawnTower(new Vector3(-2.0f, 0.0f, 0.0f));
-		spawnEnemy(new Vector3(0.0f, -15.0f, 0.0f));
+		
 	}
 
 	void Update() {

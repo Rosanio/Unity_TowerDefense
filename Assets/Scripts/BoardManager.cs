@@ -26,8 +26,19 @@ public class BoardManager : MonoBehaviour {
 			BoardLayout boardLayout = JsonUtility.FromJson<BoardLayout>(levelString);
 			foreach (Tile tile in boardLayout.layout) {
 				Vector2 position = new Vector2(tile.x, tile.y);
-				Instantiate(grassTile, position, Quaternion.identity);
+				instantiateTile(position, tile.type);
 			}
+		}
+	}
+
+	private void instantiateTile(Vector2 position, string type) {
+		switch(type) {
+			case "grass":
+				Instantiate(grassTile, position, Quaternion.identity);
+				break;
+			case "path":
+				Instantiate(pathTile, position, Quaternion.identity);
+				break;
 		}
 	}
 
