@@ -4,13 +4,36 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour {
 
-	public Vector2 speed;
+	public float speed;
 	public int health;
 
 	private Rigidbody2D rigidBody;
+	private Vector2 target;
+	private int currentTargetIndex = 0;
+	private Vector2 direction;
 
 	void Start () {
 		rigidBody = GetComponent<Rigidbody2D>();
+		getNewTarget();
+		direction = getDirection();
+	}
+
+	private void getNewTarget() {
+		if(BoardManager.instance.boardLayout.path.Count > currentTargetIndex) {
+			int pathIndex = BoardManager.instance.boardLayout.path[currentTargetIndex];
+			Tile targetTile = BoardManager.instance.tiles[pathIndex];
+			target = new Vector2(targetTile.x, targetTile.y);
+			currentTargetIndex++;
+		} else {
+			target = new Vector2(BoardManager.instance.enemyEndPosition[0],
+														BoardManager.instance.enemyEndPosition[1]);
+		}
+		direction = getDirection();
+	}
+
+	private Vector2 getDirection() {
+		Vector2 position = transform.position;
+		return (target - position);
 	}
 
 	void Update() {
@@ -29,6 +52,27 @@ public class Enemy : MonoBehaviour {
 	}
 
 	private void move() {
-		rigidBody.velocity = speed;
+		Vector2 newDirection = getDirection();
+		if(dominantDirection(newDirection) != dominantDirection(direction)) {
+			Debug.Log("Getting new direction");
+			getNewTarget();
+		}
+		rigidBody.velocity = direction.normalized * speed;
+	}
+
+	private Vector2 dominantDirection(Vector2 vector2) {
+		if(vector2.x > vector2.y) {
+			if(vector2.x > 0) {
+				return Vector2.right;
+			} else {
+				return Vector2.left;
+			}
+		} else {
+			if(vector2.y > 0) {
+				return Vector2.up;
+			} else {
+				return Vector2.down;
+			}
+		}
 	}
 }

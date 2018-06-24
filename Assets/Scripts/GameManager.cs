@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void Start() {
-		
+		spawnEnemy(BoardManager.instance.enemyStartPosition);
 	}
 
 	void Update() {
@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void spawnEnemy(Vector3 position) {
+		Debug.Log("Spawning enemy at " + position);
 		GameObject testEnemy = Instantiate(enemy, position, Quaternion.identity)
 		 												as GameObject;
 		enemies.Add(testEnemy.transform);

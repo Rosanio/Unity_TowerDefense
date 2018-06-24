@@ -5,4 +5,7 @@
   {"x": 0, "y": 10.24, "type": "grass"}, {"x": 5.12, "y": 10.24, "type": "grass"}, {"x": 10.24, "y": 10.24, "type": "grass"}, {"x": 15.36, "y": 10.24, "type": "grass"}, {"x": 20.48, "y": 10.24, "type": "path"}, {"x": 25.6, "y": 10.24, "type": "grass"},
   {"x": 0, "y": 5.12, "type": "grass"}, {"x": 5.12, "y": 5.12, "type": "path"}, {"x": 10.24, "y": 5.12, "type": "path"}, {"x": 15.36, "y": 5.12, "type": "path"}, {"x": 20.48, "y": 5.12, "type": "path"}, {"x": 25.6, "y": 5.12, "type": "grass"},
   {"x": 0, "y": 0, "type": "grass"}, {"x": 5.12, "y": 0, "type": "path"}, {"x": 10.24, "y": 0, "type": "grass"}, {"x": 15.36, "y": 0, "type": "grass"}, {"x": 20.48, "y": 0, "type": "grass"}, {"x": 25.6, "y": 0, "type": "grass"}
-  ]}
+  ],
+  "path": [1, 7, 8, 14, 15, 16, 22, 28, 27, 26, 25, 31],
+  "enemyStartPosition": [5.12, 30.72],
+  "enemyEndPosition": [5.12, -5.12]}

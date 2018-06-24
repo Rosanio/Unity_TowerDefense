@@ -9,6 +9,11 @@ public class BoardManager : MonoBehaviour {
 	public GameObject grassTile;
 	public GameObject pathTile;
 
+	[HideInInspector] public BoardLayout boardLayout;
+	[HideInInspector] public Vector2 enemyStartPosition;
+	[HideInInspector] public Vector2 enemyEndPosition;
+	[HideInInspector] public List<Tile> tiles;
+
 	void Awake() {
 		if(instance == null) {
 			instance = this;
@@ -23,11 +28,16 @@ public class BoardManager : MonoBehaviour {
 		string path = Application.dataPath + "/LevelData/level1.json";
 		if(File.Exists(path)) {
 			string levelString = File.ReadAllText(path);
-			BoardLayout boardLayout = JsonUtility.FromJson<BoardLayout>(levelString);
+			boardLayout = JsonUtility.FromJson<BoardLayout>(levelString);
+			tiles = boardLayout.layout;
 			foreach (Tile tile in boardLayout.layout) {
 				Vector2 position = new Vector2(tile.x, tile.y);
 				instantiateTile(position, tile.type);
 			}
+			enemyStartPosition = new Vector2(boardLayout.enemyStartPosition[0],
+																				boardLayout.enemyStartPosition[1]);
+			enemyEndPosition = new Vector2(boardLayout.enemyEndPosition[0],
+																				boardLayout.enemyEndPosition[1]);
 		}
 	}
 
