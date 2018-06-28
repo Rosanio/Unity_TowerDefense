@@ -19,15 +19,8 @@ public class Enemy : MonoBehaviour {
 	}
 
 	private void getNewTarget() {
-		if(BoardManager.instance.boardLayout.path.Count > currentTargetIndex) {
-			int pathIndex = BoardManager.instance.boardLayout.path[currentTargetIndex];
-			Tile targetTile = BoardManager.instance.tiles[pathIndex];
-			target = new Vector2(targetTile.x, targetTile.y);
-			currentTargetIndex++;
-		} else {
-			target = new Vector2(BoardManager.instance.enemyEndPosition[0],
-														BoardManager.instance.enemyEndPosition[1]);
-		}
+		target = GameManager.instance.getTargetTile(currentTargetIndex);
+		currentTargetIndex++;
 		direction = getDirection();
 	}
 

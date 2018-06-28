@@ -7,7 +7,10 @@ public class GameManager : MonoBehaviour {
 	public GameObject bullet;
 	public GameObject enemy;
 	public GameObject tower;
+	public GameObject grassTile;
+	public GameObject pathTile;
 
+	[HideInInspector] public BoardManager boardManager;
 	[HideInInspector] public List<Transform> bullets;
 	[HideInInspector] public List<Transform> enemies;
 	[HideInInspector] public List<Transform> towers;
@@ -22,7 +25,9 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void Start() {
-		spawnEnemy(BoardManager.instance.enemyStartPosition);
+		boardManager = GetComponent<BoardManager>();
+		boardManager.loadScene();
+		spawnEnemy(boardManager.enemyStartPosition);
 	}
 
 	void Update() {
@@ -46,5 +51,9 @@ public class GameManager : MonoBehaviour {
 		GameObject testTower = Instantiate(tower, position, Quaternion.identity)
 														as GameObject;
 		towers.Add(testTower.transform);
+	}
+
+	public Vector2 getTargetTile(int currentTargetIndex) {
+		return boardManager.getTargetTile(currentTargetIndex);
 	}
 }

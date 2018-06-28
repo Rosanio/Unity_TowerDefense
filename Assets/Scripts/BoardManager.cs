@@ -5,26 +5,12 @@ using System.IO;
 
 public class BoardManager : MonoBehaviour {
 
-	public static BoardManager instance = null;
-	public GameObject grassTile;
-	public GameObject pathTile;
-
 	[HideInInspector] public BoardLayout boardLayout;
 	[HideInInspector] public Vector2 enemyStartPosition;
 	[HideInInspector] public Vector2 enemyEndPosition;
 	[HideInInspector] public List<Tile> tiles;
 
-	void Awake() {
-		if(instance == null) {
-			instance = this;
-		} else {
-			Destroy(gameObject);
-		}
-		DontDestroyOnLoad(gameObject);
-		loadScene();
-	}
-
-	private void loadScene() {
+	public void loadScene() {
 		string path = Application.dataPath + "/LevelData/level1.json";
 		if(File.Exists(path)) {
 			string levelString = File.ReadAllText(path);
@@ -44,11 +30,22 @@ public class BoardManager : MonoBehaviour {
 	private void instantiateTile(Vector2 position, string type) {
 		switch(type) {
 			case "grass":
-				Instantiate(grassTile, position, Quaternion.identity);
+				Instantiate(GameManager.instance.grassTile, position, Quaternion.identity);
 				break;
 			case "path":
-				Instantiate(pathTile, position, Quaternion.identity);
+				Instantiate(GameManager.instance.pathTile, position, Quaternion.identity);
 				break;
+		}
+	}
+
+	public Vector2 getTargetTile(int currentTargetIndex) {
+		if(boardLayout.path.Count > currentTargetIndex) {
+			int pathIndex = boardLayout.path[currentTargetIndex];
+			Tile targetTile = tiles[pathIndex];
+			return new Vector2(targetTile.x, targetTile.y);
+		} else {
+			return new Vector2(enemyEndPosition[0],
+														enemyEndPosition[1]);
 		}
 	}
 
