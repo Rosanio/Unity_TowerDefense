@@ -16,7 +16,7 @@ public class BoardManager : MonoBehaviour {
 			string levelString = File.ReadAllText(path);
 			boardLayout = JsonUtility.FromJson<BoardLayout>(levelString);
 			foreach (Tile tile in boardLayout.layout) {
-				Vector2 position = new Vector2(tile.x, tile.y);
+				Vector3 position = new Vector3(tile.x, tile.y, 1);
 				instantiateTile(position, tile.type);
 			}
 			enemyStartPosition = new Vector2(boardLayout.enemyStartPosition[0],
@@ -26,7 +26,7 @@ public class BoardManager : MonoBehaviour {
 		}
 	}
 
-	private void instantiateTile(Vector2 position, string type) {
+	private void instantiateTile(Vector3 position, string type) {
 		switch(type) {
 			case "grass":
 				GameObject grassTile = Instantiate(GameManager.instance.grassTile,
