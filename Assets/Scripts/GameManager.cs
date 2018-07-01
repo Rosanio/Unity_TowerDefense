@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour {
 		towers.Add(testTower.transform);
 	}
 
-	public Vector2 getTargetTile(int currentTargetIndex) {
-		return boardManager.getTargetTile(currentTargetIndex);
+	public Vector2 getEnemyTargetTile(int currentTargetIndex) {
+		return boardManager.getEnemyTargetTile(currentTargetIndex);
 	}
 }

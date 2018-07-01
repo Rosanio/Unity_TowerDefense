@@ -15,11 +15,10 @@ public class Enemy : MonoBehaviour {
 	void Start () {
 		rigidBody = GetComponent<Rigidbody2D>();
 		getNewTarget();
-		direction = getDirection();
 	}
 
 	private void getNewTarget() {
-		target = GameManager.instance.getTargetTile(currentTargetIndex);
+		target = GameManager.instance.getEnemyTargetTile(currentTargetIndex);
 		currentTargetIndex++;
 		direction = getDirection();
 	}
