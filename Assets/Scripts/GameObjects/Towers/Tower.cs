@@ -8,6 +8,7 @@ public class Tower : MonoBehaviour {
 
 	private float bulletSpawnStartTime = 0;
 	private float bulletSpawnCurrentTime = 0;
+	private List<Collider2D> enemiesInRange = new List<Collider2D>();
 	private Collider2D target;
 
 	void Start (){
@@ -23,7 +24,25 @@ public class Tower : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other) {
 		// target = other;
 		if(other.tag == "Enemy") {
-			target = other;
+			enemiesInRange.Add(other);
+			if(target == null) {
+				target = other;
+			}
+		}
+	}
+
+	void OnTriggerExit2D(Collider2D other) {
+		if(other.tag == "Enemy") {
+			if(enemiesInRange.Contains(other)) {
+				enemiesInRange.Remove(other);
+				if(target == other) {
+					if(enemiesInRange.Count > 0) {
+						target = enemiesInRange[0];
+					} else {
+						target = null;
+					}
+				}
+			}
 		}
 	}
 

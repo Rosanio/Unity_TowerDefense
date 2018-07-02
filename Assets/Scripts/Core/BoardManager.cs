@@ -50,8 +50,7 @@ public class BoardManager : MonoBehaviour {
 			return new Vector2(targetTile.transform.position.x,
 													targetTile.transform.position.y);
 		} else {
-			return new Vector2(enemyEndPosition[0],
-														enemyEndPosition[1]);
+			return new Vector2(enemyEndPosition[0], enemyEndPosition[1]);
 		}
 	}
 
