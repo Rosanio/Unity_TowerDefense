@@ -31,7 +31,6 @@ public class Enemy : MonoBehaviour {
 	void Update() {
 		move();
 		if(health <= 0) {
-			Debug.Log("Boom!");
 			Destroy(gameObject, 0.0f);
 		}
 	}
@@ -46,7 +45,6 @@ public class Enemy : MonoBehaviour {
 	private void move() {
 		Vector2 newDirection = getDirection();
 		if(dominantDirection(newDirection) != dominantDirection(direction)) {
-			Debug.Log("Getting new direction");
 			getNewTarget();
 		}
 		rigidBody.velocity = direction.normalized * speed;
