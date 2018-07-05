@@ -9,9 +9,10 @@ public class PlayerMouse {
 	public static void initialize() {
 		tagPriority = new Dictionary<string, int>();
 		tagPriority[""] = 0;
-		tagPriority["Tower"] = 1;
-		tagPriority["Tile"] = 2;
-		tagPriority["UI"] = 3;
+		tagPriority["Enemy"] = 1;
+		tagPriority["Tower"] = 2;
+		tagPriority["Tile"] = 3;
+		tagPriority["UI"] = 4;
 	}
 
 	public static void checkForClick () {
@@ -26,16 +27,14 @@ public class PlayerMouse {
 					clickedObject = hit;
 				}
 			}
-			if(topTag == "Tile") {
-				GrassTile grassTile = clickedObject.collider.GetComponent<GrassTile>();
-				if(grassTile != null) {
-					grassTile.handleClick();
-				}
-			} else if(topTag == "UI") {
-				GrassTile tile = GameManager.instance.getSelectedTile();
-				tile.trySpawningTower();
-				GameManager.instance.closeMenu();
-			}
+			handleObjectClick(clickedObject);
+		}
+	}
+
+	private static void handleObjectClick(RaycastHit2D clickedObject) {
+		Clickable clickable = clickedObject.collider.GetComponent<Clickable>();
+		if(clickable != null) {
+			clickable.handleClick();
 		}
 	}
 

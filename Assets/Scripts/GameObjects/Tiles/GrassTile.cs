@@ -16,7 +16,7 @@ public class GrassTile : BaseTile {
 
 	}
 
-	public void handleClick() {
+	public override void handleClick() {
 		if(!hasTower && !GameManager.instance.isMenuOpen()) {
 			GameManager.instance.openMenu(transform.position);
 			GameManager.instance.setSelectedTile(this);

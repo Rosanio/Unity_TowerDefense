@@ -13,4 +13,8 @@ public class PathTile : BaseTile {
 	protected override void Update () {
 
 	}
+
+  public override void handleClick() {
+
+  }
 }
