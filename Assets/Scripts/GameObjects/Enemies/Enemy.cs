@@ -6,6 +6,7 @@ public class Enemy : MonoBehaviour {
 
 	public float speed;
 	public int health;
+	public int goldPerKill;
 
 	private Rigidbody2D rigidBody;
 	private Vector2 target;
@@ -30,15 +31,16 @@ public class Enemy : MonoBehaviour {
 
 	void Update() {
 		move();
-		if(health <= 0) {
-			Destroy(gameObject, 0.0f);
-		}
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {
 		if(other.tag == "Projectile") {
 			Projectile projectile = other.gameObject.GetComponent<Projectile>();
 			health = health - projectile.damage;
+			if(health <= 0) {
+				GameManager.instance.incrementGold(goldPerKill);
+				Destroy(gameObject, 0.0f);
+			}
 		}
 	}
 

@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour {
 	private GameObject towerIcon;
 	private bool menuOpen = false;
 	private GrassTile selectedTile;
+	private int gold;
+	private Text goldText;
 
 	[HideInInspector] public BoardManager boardManager;
 	[HideInInspector] public List<Transform> bullets;
@@ -32,7 +34,8 @@ public class GameManager : MonoBehaviour {
 	void Start() {
 		PlayerMouse.initialize();
 		loadScene();
-		setupTowerIcon();
+		setupUI();
+		gold = 0;
 		spawnEnemy(boardManager.enemyStartPosition);
 	}
 
@@ -41,9 +44,19 @@ public class GameManager : MonoBehaviour {
 		boardManager.loadScene();
 	}
 
+	private void setupUI() {
+		setupTowerIcon();
+		updateGoldText();
+	}
+
 	private void setupTowerIcon() {
 		towerIcon = GameObject.Find("TowerIcon");
 		towerIcon.SetActive(false);
+	}
+
+	private void updateGoldText() {
+		goldText = GameObject.Find("GoldText").GetComponent<Text>();
+		goldText.text = "Gold: " + gold;
 	}
 
 	void towerButtonClicked() {
@@ -99,5 +112,15 @@ public class GameManager : MonoBehaviour {
 
 	public GrassTile getSelectedTile() {
 		return selectedTile;
+	}
+
+	public void incrementGold(int amount) {
+		gold += amount;
+		updateGoldText();
+	}
+
+	public void spendGold(int amount) {
+		gold -= amount;
+		updateGoldText();
 	}
 }
