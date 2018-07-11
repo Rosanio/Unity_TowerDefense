@@ -34,8 +34,8 @@ public class GameManager : MonoBehaviour {
 	void Start() {
 		PlayerMouse.initialize();
 		loadScene();
+		gold = 100;
 		setupUI();
-		gold = 0;
 		spawnEnemy(boardManager.enemyStartPosition);
 	}
 
@@ -68,7 +68,6 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void spawnEnemy(Vector3 position) {
-		Debug.Log("Spawning enemy at " + position);
 		GameObject testEnemy = Instantiate(enemy, position, Quaternion.identity)
 		 												as GameObject;
 		enemies.Add(testEnemy.transform);
@@ -81,9 +80,12 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void spawnTower(Vector3 position) {
-		GameObject testTower = Instantiate(tower, position, Quaternion.identity)
-														as GameObject;
-		towers.Add(testTower.transform);
+		if(gold >= 40) {
+			spendGold(40);
+			GameObject testTower = Instantiate(tower, position, Quaternion.identity)
+			as GameObject;
+			towers.Add(testTower.transform);
+		}
 	}
 
 	public Vector2 getEnemyTargetTile(int currentTargetIndex) {
