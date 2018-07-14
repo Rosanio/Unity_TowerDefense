@@ -63,7 +63,6 @@ public class GameManager : MonoBehaviour {
 	private void spawnFirstWave() {
 		waveManager = GetComponent<WaveManager>();
 		waveManager.init();
-		waveManager.spawnNextWave();
 	}
 
 	void Update() {

@@ -7,42 +7,63 @@ public class WaveManager : MonoBehaviour {
   
   private Waves levelWaves;
   private Wave currentWave;
-  private int currentWaveIndex;
+  private int nextWaveIndex;
   private int nextEnemyIndex;
   
+  private float gameStartTime;
   private float waveStartTime;
   private float currentTime;
   
   private bool isWaveActive;
+  private bool allWavesSpawned;
   
   public void init() {
+    allWavesSpawned = false;
     string path = Application.dataPath + "/LevelData/level1Waves.json";
     if(File.Exists(path)) {
       string waveString = File.ReadAllText(path);
       levelWaves = JsonUtility.FromJson<Waves>(waveString);
-      currentWaveIndex = 0;
+      nextWaveIndex = 0;
+      gameStartTime = getTime();
+      spawnNextWave();
     } else {
       throw new FileNotFoundException("Wave file not found");
     }
   }
   
-  public void spawnNextWave() {
+  private void spawnNextWave() {
     isWaveActive = true;
-    currentWave = levelWaves.waves[currentWaveIndex];
-    currentWaveIndex++;
+    currentWave = levelWaves.waves[nextWaveIndex];
+    nextWaveIndex++;
+    if(nextWaveIndex >= levelWaves.waves.Count) {
+      allWavesSpawned = true;
+    }
     waveStartTime = getTime();
     nextEnemyIndex = 0;
   }
   
   void Update() {
+    currentTime = getTime();
+    checkForEnemySpawn();
+    checkForWaveSpawn();
+  }
+  
+  private void checkForEnemySpawn() {
     if(isWaveActive) {
-      currentTime = getTime();
       if((currentTime - waveStartTime) > currentWave.wave[nextEnemyIndex].startTime) {
         GameManager.instance.spawnEnemy(GameManager.instance.boardManager.enemyStartPosition);
         nextEnemyIndex++;
         if(nextEnemyIndex >= currentWave.wave.Count) {
           isWaveActive = false;
         }
+      }
+    }
+  }
+  
+  private void checkForWaveSpawn() {
+    if(!allWavesSpawned) {
+      if((currentTime - gameStartTime) > levelWaves.waves[nextWaveIndex].startTime) {
+        spawnNextWave();
       }
     }
   }
