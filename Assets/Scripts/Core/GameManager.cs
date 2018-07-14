@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour {
 	private Text goldText;
 
 	[HideInInspector] public BoardManager boardManager;
+	[HideInInspector] public WaveManager waveManager;
 	[HideInInspector] public List<Transform> bullets;
 	[HideInInspector] public List<Transform> enemies;
 	[HideInInspector] public List<Transform> towers;
@@ -36,7 +37,7 @@ public class GameManager : MonoBehaviour {
 		loadScene();
 		gold = 100;
 		setupUI();
-		spawnEnemy(boardManager.enemyStartPosition);
+		spawnFirstWave();
 	}
 
 	private void loadScene() {
@@ -58,9 +59,11 @@ public class GameManager : MonoBehaviour {
 		goldText = GameObject.Find("GoldText").GetComponent<Text>();
 		goldText.text = "Gold: " + gold;
 	}
-
-	void towerButtonClicked() {
-		Debug.Log("Nice");
+	
+	private void spawnFirstWave() {
+		waveManager = GetComponent<WaveManager>();
+		waveManager.init();
+		waveManager.spawnNextWave();
 	}
 
 	void Update() {

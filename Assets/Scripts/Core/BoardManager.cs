@@ -11,7 +11,7 @@ public class BoardManager : MonoBehaviour {
 	[HideInInspector] public List<GameObject> tiles;
 
 	public void loadScene() {
-		string path = Application.dataPath + "/LevelData/level1.json";
+		string path = Application.dataPath + "/LevelData/level1Board.json";
 		if(File.Exists(path)) {
 			string levelString = File.ReadAllText(path);
 			boardLayout = JsonUtility.FromJson<BoardLayout>(levelString);
