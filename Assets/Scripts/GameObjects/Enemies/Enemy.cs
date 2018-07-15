@@ -39,6 +39,7 @@ public class Enemy : MonoBehaviour {
 			health = health - projectile.damage;
 			if(health <= 0) {
 				GameManager.instance.incrementGold(goldPerKill);
+				GameManager.instance.enemies.Remove(GetComponent<Transform>());
 				Destroy(gameObject, 0.0f);
 			}
 		}
