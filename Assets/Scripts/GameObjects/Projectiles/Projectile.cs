@@ -19,11 +19,11 @@ public class Projectile : MonoBehaviour {
 	private void FindTarget() {
 		float minDistance = -1.0f;
 		for(int i = 0; i < GameManager.instance.enemies.Count; i++) {
-			Vector2 enemyPosition = GameManager.instance.enemies[i].position;
+			Vector2 enemyPosition = GameManager.instance.enemies[i].transform.position;
 			float distance = Vector2.Distance(transform.position, enemyPosition);
 			if(minDistance < 0 || distance < minDistance) {
 				minDistance = distance;
-				target = GameManager.instance.enemies[i];
+				target = GameManager.instance.enemies[i].transform;
 			}
 		}
 	}
@@ -43,7 +43,7 @@ public class Projectile : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other) {
 		if(other.tag == "Enemy") {
-			GameManager.instance.bullets.Remove(GetComponent<Transform>());
+			GameManager.instance.bullets.Remove(gameObject);
 			Destroy(gameObject, 0.1f);
 		}
 	}

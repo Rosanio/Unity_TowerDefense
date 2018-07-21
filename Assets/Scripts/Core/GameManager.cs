@@ -16,12 +16,15 @@ public class GameManager : MonoBehaviour {
 	private GrassTile selectedTile;
 	private int gold;
 	private Text goldText;
+	private int health;
+	private Text healthText;
+	private GameObject gameOverImage;
 
 	[HideInInspector] public BoardManager boardManager;
 	[HideInInspector] public WaveManager waveManager;
-	[HideInInspector] public List<Transform> bullets;
-	[HideInInspector] public List<Transform> enemies;
-	[HideInInspector] public List<Transform> towers;
+	[HideInInspector] public List<GameObject> bullets;
+	[HideInInspector] public List<GameObject> enemies;
+	[HideInInspector] public List<GameObject> towers;
 
 	void Awake() {
 		if(instance == null) {
@@ -35,7 +38,7 @@ public class GameManager : MonoBehaviour {
 	void Start() {
 		PlayerMouse.initialize();
 		loadScene();
-		gold = 100;
+		initializeGobals();
 		setupUI();
 		spawnFirstWave();
 	}
@@ -44,20 +47,37 @@ public class GameManager : MonoBehaviour {
 		boardManager = GetComponent<BoardManager>();
 		boardManager.loadScene();
 	}
+	
+	private void initializeGobals() {
+		gold = 100;
+		health = 10;
+	}
 
 	private void setupUI() {
 		setupTowerIcon();
+		setupGameOverImage();
 		updateGoldText();
+		updateHealthText();
 	}
 
 	private void setupTowerIcon() {
 		towerIcon = GameObject.Find("TowerIcon");
 		towerIcon.SetActive(false);
 	}
+	
+	private void setupGameOverImage() {
+		gameOverImage = GameObject.Find("GameOverImage");
+		gameOverImage.SetActive(false);
+	}
 
 	private void updateGoldText() {
 		goldText = GameObject.Find("GoldText").GetComponent<Text>();
 		goldText.text = "Gold: " + gold;
+	}
+	
+	private void updateHealthText() {
+		healthText = GameObject.Find("HealthText").GetComponent<Text>();
+		healthText.text = "Health: " + health;
 	}
 	
 	private void spawnFirstWave() {
@@ -72,21 +92,21 @@ public class GameManager : MonoBehaviour {
 	public void spawnEnemy(Vector3 position) {
 		GameObject testEnemy = Instantiate(enemy, position, Quaternion.identity)
 		 												as GameObject;
-		enemies.Add(testEnemy.transform);
+		enemies.Add(testEnemy);
 	}
 
 	public void spawnBullet(Vector3 position) {
 		GameObject testBullet = Instantiate(bullet, position, Quaternion.identity)
 															as GameObject;
-		bullets.Add(testBullet.transform);
+		bullets.Add(testBullet);
 	}
 
 	public void spawnTower(Vector3 position) {
 		if(gold >= 40) {
 			spendGold(40);
 			GameObject testTower = Instantiate(tower, position, Quaternion.identity)
-			as GameObject;
-			towers.Add(testTower.transform);
+															as GameObject;
+			towers.Add(testTower);
 		}
 	}
 
@@ -126,5 +146,43 @@ public class GameManager : MonoBehaviour {
 	public void spendGold(int amount) {
 		gold -= amount;
 		updateGoldText();
+	}
+	
+	public void takeDamage(int damage) {
+		health -= damage;
+		if(health <= 0) {
+			gameOver();
+		} else {
+			updateHealthText();
+		}
+	}
+	
+	private void gameOver() {
+		despawnAllGameObjects();
+		hideActiveUIElements();
+		showGameOverScreen();
+	}
+	
+	private void despawnAllGameObjects() {
+		uninstantiateGameObjects(enemies);
+		uninstantiateGameObjects(bullets);
+		uninstantiateGameObjects(towers);
+		uninstantiateGameObjects(boardManager.tiles);
+	}
+	
+	private void uninstantiateGameObjects(List<GameObject> gameObjects) {
+		for(int i = 0; i < gameObjects.Count; i++) {
+			Destroy(gameObjects[i]);
+		}
+		gameObjects.Clear();
+	}
+	
+	private void hideActiveUIElements() {
+		goldText.enabled = false;
+		healthText.enabled = false;
+	}
+	
+	private void showGameOverScreen() {
+		gameOverImage.SetActive(true);
 	}
 }

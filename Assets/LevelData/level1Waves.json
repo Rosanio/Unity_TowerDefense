@@ -1,4 +1,4 @@
 {"waves": [
-  {"wave": [{"startTime": 0}, {"startTime": 1000}, {"startTime": 2000}], "startTime": 0},
+  {"wave": [{"startTime": 0}, {"startTime": 1000}, {"startTime": 2000}, {"startTime": 3000}, {"startTime": 4000}, {"startTime": 5000}, {"startTime": 6000}, {"startTime": 7000}], "startTime": 0},
   {"wave": [{"startTime": 500}, {"startTime": 2000}, {"startTime": 3500}, {"startTime": 5000}], "startTime": 25000}
 ]}

@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour {
 	public float speed;
 	public int health;
 	public int goldPerKill;
+	public int damage;
 
 	private Rigidbody2D rigidBody;
 	private Vector2 target;
@@ -39,7 +40,7 @@ public class Enemy : MonoBehaviour {
 			health = health - projectile.damage;
 			if(health <= 0) {
 				GameManager.instance.incrementGold(goldPerKill);
-				GameManager.instance.enemies.Remove(GetComponent<Transform>());
+				GameManager.instance.enemies.Remove(gameObject);
 				Destroy(gameObject, 0.0f);
 			}
 		}
@@ -48,9 +49,18 @@ public class Enemy : MonoBehaviour {
 	private void move() {
 		Vector2 newDirection = getDirection();
 		if(dominantDirection(newDirection) != dominantDirection(direction)) {
+			checkIfLastTile();
 			getNewTarget();
 		}
 		rigidBody.velocity = direction.normalized * speed;
+	}
+	
+	private void checkIfLastTile() {
+		if(GameManager.instance.boardManager.enemyEndPosition == target) {
+			GameManager.instance.takeDamage(damage);
+			GameManager.instance.enemies.Remove(gameObject);
+			Destroy(gameObject, 0.0f);
+		}
 	}
 
 	private Vector2 dominantDirection(Vector2 vector2) {
