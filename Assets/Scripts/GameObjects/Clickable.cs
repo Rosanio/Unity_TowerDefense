@@ -8,9 +8,5 @@ public abstract class Clickable : MonoBehaviour {
 
 	}
 
-	protected virtual void Update () {
-
-	}
-
 	public abstract void handleClick();
 }

@@ -9,11 +9,6 @@ public class TowerIcon : BaseUIElement {
 
 	}
 
-	// Update is called once per frame
-	protected override void Update () {
-
-	}
-
 	public override void handleClick() {
 		GrassTile tile = GameManager.instance.getSelectedTile();
 		tile.trySpawningTower();

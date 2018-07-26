@@ -11,11 +11,6 @@ public class GrassTile : BaseTile {
 
 	}
 
-	// Update is called once per frame
-	protected override void Update () {
-
-	}
-
 	public override void handleClick() {
 		if(!hasTower && !GameManager.instance.isMenuOpen()) {
 			GameManager.instance.openMenu(transform.position);

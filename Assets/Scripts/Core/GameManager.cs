@@ -19,12 +19,14 @@ public class GameManager : MonoBehaviour {
 	private int health;
 	private Text healthText;
 	private GameObject gameOverImage;
+	private GameObject startImage;
 
 	[HideInInspector] public BoardManager boardManager;
 	[HideInInspector] public WaveManager waveManager;
 	[HideInInspector] public List<GameObject> bullets;
 	[HideInInspector] public List<GameObject> enemies;
 	[HideInInspector] public List<GameObject> towers;
+	[HideInInspector] public bool gameActive = false;
 
 	void Awake() {
 		if(instance == null) {
@@ -38,48 +40,58 @@ public class GameManager : MonoBehaviour {
 	void Start() {
 		PlayerMouse.initialize();
 		loadScene();
-		initializeGobals();
+		initializePlayerResources();
 		setupUI();
-		spawnFirstWave();
 	}
 
 	private void loadScene() {
 		boardManager = GetComponent<BoardManager>();
 		boardManager.loadScene();
 	}
-	
-	private void initializeGobals() {
+
+	private void initializePlayerResources() {
 		gold = 100;
 		health = 10;
 	}
 
 	private void setupUI() {
-		setupTowerIcon();
+		setupStartImage();
 		setupGameOverImage();
 		updateGoldText();
 		updateHealthText();
+		setupTowerIcon();
 	}
 
 	private void setupTowerIcon() {
 		towerIcon = GameObject.Find("TowerIcon");
 		towerIcon.SetActive(false);
 	}
-	
+
 	private void setupGameOverImage() {
 		gameOverImage = GameObject.Find("GameOverImage");
 		gameOverImage.SetActive(false);
+	}
+
+	private void setupStartImage() {
+		startImage = GameObject.Find("StartImage");
 	}
 
 	private void updateGoldText() {
 		goldText = GameObject.Find("GoldText").GetComponent<Text>();
 		goldText.text = "Gold: " + gold;
 	}
-	
+
 	private void updateHealthText() {
 		healthText = GameObject.Find("HealthText").GetComponent<Text>();
 		healthText.text = "Health: " + health;
 	}
-	
+
+	public void startLevel() {
+		gameActive = true;
+		spawnFirstWave();
+		hideStartScreen();
+	}
+
 	private void spawnFirstWave() {
 		waveManager = GetComponent<WaveManager>();
 		waveManager.init();
@@ -147,7 +159,7 @@ public class GameManager : MonoBehaviour {
 		gold -= amount;
 		updateGoldText();
 	}
-	
+
 	public void takeDamage(int damage) {
 		health -= damage;
 		if(health <= 0) {
@@ -156,33 +168,38 @@ public class GameManager : MonoBehaviour {
 			updateHealthText();
 		}
 	}
-	
+
 	private void gameOver() {
 		despawnAllGameObjects();
 		hideActiveUIElements();
 		showGameOverScreen();
 	}
-	
+
 	private void despawnAllGameObjects() {
 		uninstantiateGameObjects(enemies);
 		uninstantiateGameObjects(bullets);
 		uninstantiateGameObjects(towers);
 		uninstantiateGameObjects(boardManager.tiles);
 	}
-	
+
 	private void uninstantiateGameObjects(List<GameObject> gameObjects) {
 		for(int i = 0; i < gameObjects.Count; i++) {
 			Destroy(gameObjects[i]);
 		}
 		gameObjects.Clear();
 	}
-	
+
 	private void hideActiveUIElements() {
 		goldText.enabled = false;
 		healthText.enabled = false;
 	}
-	
+
 	private void showGameOverScreen() {
 		gameOverImage.SetActive(true);
+	}
+
+	private void hideStartScreen() {
+		Debug.Log("Hiding start screen");
+		startImage.SetActive(false);
 	}
 }

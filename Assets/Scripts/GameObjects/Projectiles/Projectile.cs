@@ -30,6 +30,8 @@ public class Projectile : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+		if(!GameManager.instance.gameActive)
+			return;
 		if(target != null) {
 			Vector3 position = transform.position;
 			//Calculate new trajectory

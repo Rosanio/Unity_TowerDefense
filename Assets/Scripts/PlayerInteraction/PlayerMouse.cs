@@ -17,17 +17,21 @@ public class PlayerMouse {
 
 	public static void checkForClick () {
 		if(wasClick()) {
-			Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-			RaycastHit2D clickedObject = new RaycastHit2D();
-			string topTag = "";
-			RaycastHit2D[] hits = Physics2D.RaycastAll(mousePosition, new Vector2(0, 0), 0.01f);
-			foreach(RaycastHit2D hit in hits) {
-				if(tagPriority[hit.collider.tag] > tagPriority[topTag]) {
-					topTag = hit.collider.tag;
-					clickedObject = hit;
+			if(GameManager.instance.gameActive) {
+				Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+				RaycastHit2D clickedObject = new RaycastHit2D();
+				string topTag = "";
+				RaycastHit2D[] hits = Physics2D.RaycastAll(mousePosition, new Vector2(0, 0), 0.01f);
+				foreach(RaycastHit2D hit in hits) {
+					if(tagPriority[hit.collider.tag] > tagPriority[topTag]) {
+						topTag = hit.collider.tag;
+						clickedObject = hit;
+					}
 				}
+				handleObjectClick(clickedObject);
+			} else {
+				GameManager.instance.startLevel();
 			}
-			handleObjectClick(clickedObject);
 		}
 	}
 

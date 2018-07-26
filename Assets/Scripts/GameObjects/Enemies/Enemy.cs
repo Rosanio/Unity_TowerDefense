@@ -31,6 +31,8 @@ public class Enemy : MonoBehaviour {
 	}
 
 	void Update() {
+		if(!GameManager.instance.gameActive)
+			return;
 		move();
 	}
 
@@ -54,7 +56,7 @@ public class Enemy : MonoBehaviour {
 		}
 		rigidBody.velocity = direction.normalized * speed;
 	}
-	
+
 	private void checkIfLastTile() {
 		if(GameManager.instance.boardManager.enemyEndPosition == target) {
 			GameManager.instance.takeDamage(damage);
