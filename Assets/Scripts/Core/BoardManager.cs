@@ -19,10 +19,10 @@ public class BoardManager : MonoBehaviour {
 				Vector3 position = new Vector3(tile.x, tile.y, 1);
 				instantiateTile(position, tile.type);
 			}
-			enemyStartPosition = new Vector2(boardLayout.enemyStartPosition[0],
-																				boardLayout.enemyStartPosition[1]);
-			enemyEndPosition = new Vector2(boardLayout.enemyEndPosition[0],
-																				boardLayout.enemyEndPosition[1]);
+			enemyStartPosition = new Vector2(boardLayout.path.enemyStartPosition[0],
+																				boardLayout.path.enemyStartPosition[1]);
+			enemyEndPosition = new Vector2(boardLayout.path.enemyEndPosition[0],
+																				boardLayout.path.enemyEndPosition[1]);
 		}
 	}
 
@@ -44,8 +44,8 @@ public class BoardManager : MonoBehaviour {
 	}
 
 	public Vector2 getEnemyTargetTile(int currentTargetIndex) {
-		if(boardLayout.path.Count > currentTargetIndex) {
-			int pathIndex = boardLayout.path[currentTargetIndex];
+		if(boardLayout.path.layoutOrder.Count > currentTargetIndex) {
+			int pathIndex = boardLayout.path.layoutOrder[currentTargetIndex];
 			GameObject targetTile = tiles[pathIndex];
 			return new Vector2(targetTile.transform.position.x,
 													targetTile.transform.position.y);
