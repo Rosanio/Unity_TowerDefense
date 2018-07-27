@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour {
 	private GameObject startImage;
 
 	[HideInInspector] public BoardManager boardManager;
+	[HideInInspector] public Player player;
 	[HideInInspector] public WaveManager waveManager;
 	[HideInInspector] public List<GameObject> bullets;
 	[HideInInspector] public List<GameObject> enemies;
@@ -38,10 +39,16 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void Start() {
-		PlayerMouse.initialize();
+		initPlayerControls();
 		loadScene();
 		initializePlayerResources();
 		setupUI();
+	}
+
+	private void initPlayerControls() {
+		player = GetComponent<Player>();
+		player.init();
+		PlayerMouse.initialize();
 	}
 
 	private void loadScene() {
