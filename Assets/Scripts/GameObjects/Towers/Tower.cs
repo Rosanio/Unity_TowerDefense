@@ -6,20 +6,22 @@ public class Tower : MonoBehaviour {
 
 	public float bulletSpawnWaitTime;
 
-	private float bulletSpawnStartTime = 0;
-	private float bulletSpawnCurrentTime = 0;
+	private Timer bulletSpawnTimer = null;
 	private List<Collider2D> enemiesInRange = new List<Collider2D>();
 	private Collider2D target;
 
-	void Start (){
-
+	void Start () {
+		bulletSpawnTimer = new Timer(true);
 	}
 
 	void Update() {
 		if(!GameManager.instance.gameActive)
 			return;
-		if(target != null && shouldSpawnBullet()) {
-			spawnBullet();
+		if(shouldSpawnBullet()) {
+			if(target != null)
+				spawnBullet();
+			else
+				bulletSpawnTimer.stop();
 		}
 	}
 
@@ -29,6 +31,10 @@ public class Tower : MonoBehaviour {
 			enemiesInRange.Add(other);
 			if(target == null) {
 				target = other;
+				if(!bulletSpawnTimer.isActive()) {
+					bulletSpawnTimer.start(bulletSpawnWaitTime);
+					spawnBullet();
+				}
 			}
 		}
 	}
@@ -49,13 +55,11 @@ public class Tower : MonoBehaviour {
 	}
 
 	private void spawnBullet() {
-		bulletSpawnStartTime = getTime();
 		GameManager.instance.spawnBullet(transform.position);
 	}
 
 	private bool shouldSpawnBullet() {
-		bulletSpawnCurrentTime = getTime();
-		return (bulletSpawnCurrentTime - bulletSpawnStartTime) > bulletSpawnWaitTime;
+		return bulletSpawnTimer.isComplete();
 	}
 
 	private float getTime() {
