@@ -7,5 +7,11 @@ public abstract class BaseTile : Clickable {
 	[HideInInspector] public float y;
 	[HideInInspector] public string type;
 
-  
+  public override void handleClick() {
+    if(GameManager.instance.isMenuOpen()) {
+      GameManager.instance.closeMenu();
+    }
+  }
+
+
 }
