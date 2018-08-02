@@ -40,9 +40,6 @@ public class GameManager : MonoBehaviour {
 
 	void Start() {
 		initPlayerControls();
-		loadScene();
-		initializePlayerResources();
-		setupUI();
 	}
 
 	private void initPlayerControls() {
@@ -70,17 +67,20 @@ public class GameManager : MonoBehaviour {
 	}
 
 	private void setupTowerIcon() {
-		towerIcon = GameObject.Find("TowerIcon");
+		if(towerIcon == null)
+			towerIcon = GameObject.Find("TowerIcon");
 		towerIcon.SetActive(false);
 	}
 
 	private void setupGameOverImage() {
-		gameOverImage = GameObject.Find("GameOverImage");
+		if(gameOverImage == null)
+			gameOverImage = GameObject.Find("GameOverImage");
 		gameOverImage.SetActive(false);
 	}
 
 	private void setupStartImage() {
-		startImage = GameObject.Find("StartImage");
+		if(startImage == null)
+			startImage = GameObject.Find("StartImage");
 	}
 
 	private void updateGoldText() {
@@ -94,6 +94,9 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void startLevel() {
+		loadScene();
+		initializePlayerResources();
+		setupUI();
 		gameActive = true;
 		spawnFirstWave();
 		hideStartScreen();
@@ -177,6 +180,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	private void gameOver() {
+		gameActive = false;
 		despawnAllGameObjects();
 		hideActiveUIElements();
 		showGameOverScreen();
