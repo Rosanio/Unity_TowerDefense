@@ -7,12 +7,13 @@ public class GameManager : MonoBehaviour {
 	public static GameManager instance = null;
 	public GameObject bullet;
 	public GameObject enemy;
-	public GameObject tower;
+	public GameObject bowlingBallTower;
 	public GameObject bombTower;
 	public GameObject grassTile;
 	public GameObject pathTile;
 
-	private GameObject towerIcon;
+	private GameObject bowlingBallIcon;
+	private GameObject bombIcon;
 	private bool menuOpen = false;
 	private GrassTile selectedTile;
 	private int gold;
@@ -64,13 +65,16 @@ public class GameManager : MonoBehaviour {
 		setupGameOverImage();
 		updateGoldText();
 		updateHealthText();
-		setupTowerIcon();
+		setupTowerIcons();
 	}
 
-	private void setupTowerIcon() {
-		if(towerIcon == null)
-			towerIcon = GameObject.Find("TowerIcon");
-		towerIcon.SetActive(false);
+	private void setupTowerIcons() {
+		if(bowlingBallIcon == null)
+			bowlingBallIcon = GameObject.Find("BowlingBallIcon");
+		bowlingBallIcon.SetActive(false);
+		if(bombIcon == null)
+			bombIcon = GameObject.Find("BombIcon");
+		bombIcon.SetActive(false);
 	}
 
 	private void setupGameOverImage() {
@@ -137,7 +141,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	private void spawnBowlingBallTower(Vector3 position) {
-		spawnTower(tower, 40, position);
+		spawnTower(bowlingBallTower, 40, position);
 	}
 
 	private void spawnBombTower(Vector3 position) {
@@ -158,14 +162,18 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void closeMenu() {
-		towerIcon.SetActive(false);
+		bowlingBallIcon.SetActive(false);
+		bombIcon.SetActive(false);
 		menuOpen = false;
 	}
 
 	public void openMenu(Vector2 centerPosition) {
-		Vector2 iconPosition = centerPosition - new Vector2(1.5f, 0);
-		towerIcon.transform.position = iconPosition;
-		towerIcon.SetActive(true);
+		Vector2 bbIconPosition = centerPosition - new Vector2(1.5f, 0);
+		bowlingBallIcon.transform.position = bbIconPosition;
+		bowlingBallIcon.SetActive(true);
+		Vector2 bombIconPosition = centerPosition - new Vector2(0, 1.5f);
+		bombIcon.transform.position = bombIconPosition;
+		bombIcon.SetActive(true);
 		menuOpen = true;
 	}
 
@@ -231,7 +239,6 @@ public class GameManager : MonoBehaviour {
 	}
 
 	private void hideStartScreen() {
-		Debug.Log("Hiding start screen");
 		startImage.SetActive(false);
 	}
 }

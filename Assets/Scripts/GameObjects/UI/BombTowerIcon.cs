@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TowerIcon : BaseUIElement {
+public class BombTowerIcon : BaseUIElement {
 
 	// Use this for initialization
 	protected override void Start () {
@@ -11,7 +11,7 @@ public class TowerIcon : BaseUIElement {
 
 	public override void handleClick() {
 		GrassTile tile = GameManager.instance.getSelectedTile();
-		tile.trySpawningTower("bowlingball");
+		tile.trySpawningTower("bomb");
 		GameManager.instance.closeMenu();
 	}
 }
