@@ -20,9 +20,9 @@ public class GrassTile : BaseTile {
 		}
 	}
 
-	public void trySpawningTower() {
+	public void trySpawningTower(string type) {
 		if(!hasTower) {
-			GameManager.instance.spawnTower(transform.position);
+			GameManager.instance.spawnTower(transform.position, type);
 			hasTower = true;
 		}
 	}

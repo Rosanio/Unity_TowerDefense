@@ -11,7 +11,7 @@ public class TowerIcon : BaseUIElement {
 
 	public override void handleClick() {
 		GrassTile tile = GameManager.instance.getSelectedTile();
-		tile.trySpawningTower();
+		tile.trySpawningTower("bowlingball");
 		GameManager.instance.closeMenu();
 	}
 }

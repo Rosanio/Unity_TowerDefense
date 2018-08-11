@@ -20,9 +20,9 @@ public class BoardManager : MonoBehaviour {
 				instantiateTile(position, tile.type);
 			}
 			enemyStartPosition = new Vector2(boardLayout.path.enemyStartPosition[0],
-																				boardLayout.path.enemyStartPosition[1]);
+											boardLayout.path.enemyStartPosition[1]);
 			enemyEndPosition = new Vector2(boardLayout.path.enemyEndPosition[0],
-																				boardLayout.path.enemyEndPosition[1]);
+											boardLayout.path.enemyEndPosition[1]);
 		}
 	}
 
@@ -30,14 +30,14 @@ public class BoardManager : MonoBehaviour {
 		switch(type) {
 			case "grass":
 				GameObject grassTile = Instantiate(GameManager.instance.grassTile,
-																						position, Quaternion.identity)
-																as GameObject;
+													position, Quaternion.identity)
+										as GameObject;
 				tiles.Add(grassTile);
 				break;
 			case "path":
 				GameObject pathTile = Instantiate(GameManager.instance.pathTile,
-				 																	position, Quaternion.identity)
-															as GameObject;
+				 									position, Quaternion.identity)
+										as GameObject;
 				tiles.Add(pathTile);
 				break;
 		}
@@ -48,7 +48,7 @@ public class BoardManager : MonoBehaviour {
 			int pathIndex = boardLayout.path.layoutOrder[currentTargetIndex];
 			GameObject targetTile = tiles[pathIndex];
 			return new Vector2(targetTile.transform.position.x,
-													targetTile.transform.position.y);
+								targetTile.transform.position.y);
 		} else {
 			return new Vector2(enemyEndPosition[0], enemyEndPosition[1]);
 		}

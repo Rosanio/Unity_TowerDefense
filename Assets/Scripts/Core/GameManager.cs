@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour {
 	public GameObject bullet;
 	public GameObject enemy;
 	public GameObject tower;
+	public GameObject bombTower;
 	public GameObject grassTile;
 	public GameObject pathTile;
 
@@ -124,12 +125,31 @@ public class GameManager : MonoBehaviour {
 		bullets.Add(newBullet);
 	}
 
-	public void spawnTower(Vector3 position) {
-		if(gold >= 40) {
-			spendGold(40);
-			GameObject testTower = Instantiate(tower, position, Quaternion.identity)
+	public void spawnTower(Vector3 position, string type) {
+		switch(type) {
+			case "bowlingball":
+				spawnBowlingBallTower(position);
+				break;
+			case "bomb":
+				spawnBombTower(position);
+				break;
+		}
+	}
+
+	private void spawnBowlingBallTower(Vector3 position) {
+		spawnTower(tower, 40, position);
+	}
+
+	private void spawnBombTower(Vector3 position) {
+		spawnTower(bombTower, 60, position);
+	}
+
+	private void spawnTower(GameObject towerPrefab, int goldCost, Vector3 position) {
+		if(gold >= goldCost) {
+			spendGold(goldCost);
+			GameObject newTower = Instantiate(towerPrefab, position, Quaternion.identity)
 															as GameObject;
-			towers.Add(testTower);
+			towers.Add(newTower);
 		}
 	}
 
