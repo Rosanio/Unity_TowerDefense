@@ -13,8 +13,13 @@ public class Enemy : MonoBehaviour {
 	private Vector2 target;
 	private int currentTargetIndex = 0;
 	private Vector2 direction;
+	private Vector2 lastPosition;
+
+	[HideInInspector] public float distanceTraveled;
 
 	void Start () {
+		distanceTraveled = 0;
+		lastPosition = transform.position;
 		rigidBody = GetComponent<Rigidbody2D>();
 		getNewTarget();
 	}
@@ -34,6 +39,8 @@ public class Enemy : MonoBehaviour {
 		if(!GameManager.instance.gameActive)
 			return;
 		move();
+		distanceTraveled += Vector2.Distance(transform.position, lastPosition);
+		lastPosition = transform.position;
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {

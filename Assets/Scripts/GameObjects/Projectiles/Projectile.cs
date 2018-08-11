@@ -8,25 +8,14 @@ public class Projectile : MonoBehaviour {
 	public int damage;
 
 	private Rigidbody2D rigidBody;
-	private Transform target = null;
+	[HideInInspector] public Transform target;
 
 	// Use this for initialization
 	void Start () {
 		rigidBody = GetComponent<Rigidbody2D>();
-		FindTarget();
 	}
 
-	private void FindTarget() {
-		float minDistance = -1.0f;
-		for(int i = 0; i < GameManager.instance.enemies.Count; i++) {
-			Vector2 enemyPosition = GameManager.instance.enemies[i].transform.position;
-			float distance = Vector2.Distance(transform.position, enemyPosition);
-			if(minDistance < 0 || distance < minDistance) {
-				minDistance = distance;
-				target = GameManager.instance.enemies[i].transform;
-			}
-		}
-	}
+
 
 	// Update is called once per frame
 	void Update () {
@@ -35,7 +24,8 @@ public class Projectile : MonoBehaviour {
 		if(target != null) {
 			Vector3 position = transform.position;
 			//Calculate new trajectory
-			Vector2 newVelocity = new Vector2((target.position.x - position.x), (target.position.y - position.y));
+			Vector2 newVelocity = new Vector2((target.position.x - position.x),
+											(target.position.y - position.y));
 			newVelocity.Normalize();
 
 			//Move

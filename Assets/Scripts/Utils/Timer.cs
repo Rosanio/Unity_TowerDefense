@@ -26,7 +26,6 @@ public class Timer {
         if(!isActive())
             return false;
         bool isDone = checkIfDone();
-        Debug.Log("Is done: " + isDone);
         if(isDone)
             handleRepeat();
         return isDone;
@@ -38,7 +37,6 @@ public class Timer {
 
     private bool checkIfDone() {
         currentTime = getTime();
-        Debug.Log("Diff: " + startTime);
         return (currentTime - startTime) > duration;
     }
 

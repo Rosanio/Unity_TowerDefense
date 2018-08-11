@@ -8,7 +8,7 @@ public class Tower : MonoBehaviour {
 
 	private Timer bulletSpawnTimer = null;
 	private List<Collider2D> enemiesInRange = new List<Collider2D>();
-	private Collider2D target;
+	private Transform target;
 
 	void Start () {
 		bulletSpawnTimer = new Timer(true);
@@ -30,11 +30,13 @@ public class Tower : MonoBehaviour {
 		if(other.tag == "Enemy") {
 			enemiesInRange.Add(other);
 			if(target == null) {
-				target = other;
+				target = FindTarget();
 				if(!bulletSpawnTimer.isActive()) {
 					bulletSpawnTimer.start(bulletSpawnWaitTime);
 					spawnBullet();
 				}
+			} else {
+				target = FindTarget();
 			}
 		}
 	}
@@ -43,9 +45,9 @@ public class Tower : MonoBehaviour {
 		if(other.tag == "Enemy") {
 			if(enemiesInRange.Contains(other)) {
 				enemiesInRange.Remove(other);
-				if(target == other) {
+				if(target == other.GetComponent<Transform>()) {
 					if(enemiesInRange.Count > 0) {
-						target = enemiesInRange[0];
+						target = FindTarget();
 					} else {
 						target = null;
 					}
@@ -54,8 +56,20 @@ public class Tower : MonoBehaviour {
 		}
 	}
 
+	private Transform FindTarget() {
+		float maxDistanceTraveled = -1;
+		Transform newTarget = null;
+		for(int i = 0; i < enemiesInRange.Count; i++) {
+			if(enemiesInRange[i].GetComponent<Enemy>().distanceTraveled > maxDistanceTraveled) {
+				maxDistanceTraveled = enemiesInRange[i].GetComponent<Enemy>().distanceTraveled;
+				newTarget = enemiesInRange[i].GetComponent<Transform>();
+			}
+		}
+		return newTarget;
+	}
+
 	private void spawnBullet() {
-		GameManager.instance.spawnBullet(transform.position);
+		GameManager.instance.spawnBullet(transform.position, target);
 	}
 
 	private bool shouldSpawnBullet() {

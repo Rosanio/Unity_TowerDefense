@@ -117,10 +117,11 @@ public class GameManager : MonoBehaviour {
 		enemies.Add(testEnemy);
 	}
 
-	public void spawnBullet(Vector3 position) {
-		GameObject testBullet = Instantiate(bullet, position, Quaternion.identity)
+	public void spawnBullet(Vector3 position, Transform target) {
+		GameObject newBullet = Instantiate(bullet, position, Quaternion.identity)
 															as GameObject;
-		bullets.Add(testBullet);
+		newBullet.GetComponent<Projectile>().target = target;
+		bullets.Add(newBullet);
 	}
 
 	public void spawnTower(Vector3 position) {
