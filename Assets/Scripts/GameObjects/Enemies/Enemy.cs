@@ -45,7 +45,7 @@ public class Enemy : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other) {
 		if(other.tag == "Projectile") {
-			Projectile projectile = other.gameObject.GetComponent<Projectile>();
+			BaseProjectile projectile = other.gameObject.GetComponent<BaseProjectile>();
 			health = health - projectile.damage;
 			if(health <= 0) {
 				GameManager.instance.incrementGold(goldPerKill);

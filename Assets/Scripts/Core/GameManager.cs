@@ -134,7 +134,7 @@ public class GameManager : MonoBehaviour {
 	public void spawnProjectile(GameObject projectile, Vector3 position, Transform target) {
 		GameObject newProjectile = Instantiate(projectile, position, Quaternion.identity)
 															as GameObject;
-		newProjectile.GetComponent<Projectile>().target = target;
+		newProjectile.GetComponent<BaseProjectile>().target = target;
 		bullets.Add(newProjectile);
 	}
 
