@@ -1,8 +1,8 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BowlingBallTower : BaseTower {
+public class BombTower : BaseTower {
 
 	public override Transform FindTarget() {
 		float maxDistanceTraveled = -1;
@@ -17,7 +17,7 @@ public class BowlingBallTower : BaseTower {
 	}
 
 	public override void spawnProjectile() {
-		GameManager.instance.spawnBowlingBall(transform.position, target);
+		GameManager.instance.spawnBomb(transform.position, target);
 	}
 
 }

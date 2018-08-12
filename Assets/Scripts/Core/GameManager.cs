@@ -5,7 +5,8 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 	public static GameManager instance = null;
-	public GameObject bullet;
+	public GameObject bowlingBall;
+	public GameObject bomb;
 	public GameObject enemy;
 	public GameObject bowlingBallTower;
 	public GameObject bombTower;
@@ -122,11 +123,19 @@ public class GameManager : MonoBehaviour {
 		enemies.Add(testEnemy);
 	}
 
-	public void spawnBullet(Vector3 position, Transform target) {
-		GameObject newBullet = Instantiate(bullet, position, Quaternion.identity)
+	public void spawnBowlingBall(Vector3 position, Transform target) {
+		spawnProjectile(bowlingBall, position, target);
+	}
+
+	public void spawnBomb(Vector3 position, Transform target) {
+		spawnProjectile(bomb, position, target);
+	}
+
+	public void spawnProjectile(GameObject projectile, Vector3 position, Transform target) {
+		GameObject newProjectile = Instantiate(projectile, position, Quaternion.identity)
 															as GameObject;
-		newBullet.GetComponent<Projectile>().target = target;
-		bullets.Add(newBullet);
+		newProjectile.GetComponent<Projectile>().target = target;
+		bullets.Add(newProjectile);
 	}
 
 	public void spawnTower(Vector3 position, string type) {
@@ -168,13 +177,14 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void openMenu(Vector2 centerPosition) {
-		Vector2 bbIconPosition = centerPosition - new Vector2(1.5f, 0);
-		bowlingBallIcon.transform.position = bbIconPosition;
-		bowlingBallIcon.SetActive(true);
-		Vector2 bombIconPosition = centerPosition - new Vector2(0, 1.5f);
-		bombIcon.transform.position = bombIconPosition;
-		bombIcon.SetActive(true);
+		displayIcon(bowlingBallIcon, (centerPosition - new Vector2(1.5f, 0)));
+		displayIcon(bombIcon, (centerPosition - new Vector2(0, -1.5f)));
 		menuOpen = true;
+	}
+
+	private void displayIcon(GameObject icon, Vector2 position) {
+		icon.transform.position = position;
+		icon.SetActive(true);
 	}
 
 	public bool isMenuOpen() {
