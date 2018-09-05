@@ -43,15 +43,12 @@ public class Enemy : MonoBehaviour {
 		lastPosition = transform.position;
 	}
 
-	void OnTriggerEnter2D(Collider2D other) {
-		if(other.tag == "Projectile") {
-			BaseProjectile projectile = other.gameObject.GetComponent<BaseProjectile>();
-			health = health - projectile.damage;
-			if(health <= 0) {
-				GameManager.instance.incrementGold(goldPerKill);
-				GameManager.instance.enemies.Remove(gameObject);
-				Destroy(gameObject, 0.0f);
-			}
+	public void doDamage(int amount) {
+		health = health - amount;
+		if(health <= 0) {
+			GameManager.instance.incrementGold(goldPerKill);
+			GameManager.instance.enemies.Remove(gameObject);
+			Destroy(gameObject, 0.0f);
 		}
 	}
 
